@@ -1,7 +1,8 @@
 SELECT
 	distinct sierra_view.varfield.field_content as email,
-	CONCAT(fn.first_name, ' ', fn.last_name) as name,
-	pv.patron_agency_code_num 
+	fn.first_name as firstname,
+	fn.last_name as lastname,
+	pv.patron_agency_code_num as agency
 FROM
 	sierra_view.patron_record
 JOIN
