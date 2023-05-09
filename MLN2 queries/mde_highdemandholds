@@ -1,0 +1,55 @@
+SELECT
+  DISTINCT(b.record_type_code || b.record_num || 'a') AS "Bib Record",
+  ir.location_code,
+  b.title AS "Title", r.best_author AS Author,
+  (SELECT
+COUNT(h.id)
+   FROM
+sierra_view.hold h  
+JOIN sierra_view.patron_view p ON h.patron_record_id = p.id
+   WHERE b.id = h.record_id AND p.patron_agency_code_num = 2 -- Patron Agency 2
+   HAVING COUNT(h.id) > 0) AS "Hold Count", -- At least 1 hold
+  (SELECT
+     COUNT(il.bib_record_id)
+   FROM sierra_view.bib_record_item_record_link il
+   JOIN sierra_view.item_view i ON il.item_record_id = i.id
+   WHERE b.id = il.bib_record_id AND i.agency_code_num = 2) AS "Item Count", 
+(SELECT
+   SUM(orc.copies)
+FROM
+  sierra_view.order_record_cmf orc
+  JOIN sierra_view.bib_record_order_record_link l ON orc.order_record_id = l.order_record_id
+  WHERE orc.location_code LIKE 'md%' AND l.bib_record_id = b.id) AS "Order Copies Count",  
+-- Order location code begins with 'b'
+CASE
+  WHEN
+  (SELECT
+     COUNT(il.bib_record_id)
+   FROM
+     sierra_view.bib_record_item_record_link il
+JOIN sierra_view.item_view i ON il.item_record_id = i.id
+   WHERE b.id = il.bib_record_id AND i.agency_code_num = 2) > 0
+  THEN
+   ROUND((SELECT
+COUNT(h.id)
+   FROM
+sierra_view.hold h 
+JOIN sierra_view.patron_view p ON h.patron_record_id = p.id
+   WHERE b.id = h.record_id AND p.patron_agency_code_num = 2 
+   HAVING COUNT(h.id) > 0)::NUMERIC, 2) /
+  ROUND((SELECT
+     COUNT(il.bib_record_id)
+   FROM
+     sierra_view.bib_record_item_record_link il
+JOIN sierra_view.item_view i ON il.item_record_id = i.id
+   WHERE b.id = il.bib_record_id AND i.agency_code_num = 2)::NUMERIC, 2)
+ELSE 0 END AS "Ratio"
+FROM
+  sierra_view.bib_view b
+JOIN sierra_view.bib_record_property r ON b.id = r.bib_record_id
+JOIN sierra_view.hold h ON b.id = h.record_id
+JOIN sierra_view.patron_view p ON h.patron_record_id = p.id
+left join sierra_view.bib_record_item_record_link brirl on b.id = brirl.bib_record_id 
+left join sierra_view.item_record ir on brirl.item_record_id = ir.record_id
+WHERE p.patron_agency_code_num = 2 -- Patron Agency 2
+  ORDER BY "Ratio" Desc;
