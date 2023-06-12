@@ -19,7 +19,7 @@ ON
 WHERE
 	sierra_view.patron_record.expiration_date_gmt between NOW() and NOW() + INTERVAL '60' DAY
 AND
-	pv.patron_agency_code_num = '1'
+	pv.home_library_code like 'ls%'
 AND
 	sierra_view.varfield.varfield_type_code = 'z'
 AND
@@ -32,3 +32,7 @@ AND
 	CONCAT(fn.first_name, ' ', fn.last_name) not like ' %'
 and
 	sierra_view.varfield.field_content like '%_@_%._%'
+and
+	sierra_view.patron_record.ptype_code != 44
+and 
+	age(now(),sierra_view.patron_record.activity_gmt) <= '2 years%'

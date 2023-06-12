@@ -25,7 +25,7 @@ WHERE
 and 
 	rm.record_type_code = 'p'
 AND
-	pv.patron_agency_code_num = '1'
+	pv.home_library_code like 'ls%'
 AND
 	sierra_view.varfield.varfield_type_code = 'z'
 AND
@@ -38,3 +38,5 @@ AND
 	CONCAT(fn.first_name, ' ', fn.last_name) not like ' %'
 and
 	sierra_view.varfield.field_content like '%_@_%._%'
+and
+	age(now(),sierra_view.patron_record.birth_date_gmt) >= '18 years%'
