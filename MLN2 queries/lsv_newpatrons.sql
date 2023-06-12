@@ -1,8 +1,7 @@
 SELECT
 	distinct sierra_view.varfield.field_content as email,
 	fn.first_name as firstname,
-	fn.last_name as lastname,
-	pv.patron_agency_code_num as agency
+	fn.last_name as lastname
 FROM
 	sierra_view.patron_record
 JOIN
