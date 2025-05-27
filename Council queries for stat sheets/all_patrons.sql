@@ -1,6 +1,6 @@
 SELECT
 	apn."name",
-	COUNT(pv.id)
+	COUNT(DISTINCT(pv.id))
 FROM
 	sierra_view.patron_view AS pv
 	JOIN sierra_view.agency_property AS ap ON ap.code_num = pv.patron_agency_code_num
