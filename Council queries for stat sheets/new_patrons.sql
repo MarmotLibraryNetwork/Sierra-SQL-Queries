@@ -1,6 +1,6 @@
 SELECT
 	apn."name",
-	count(pv.id)
+	count(DISTINCT(pv.id))
 FROM
 	sierra_view.patron_view AS pv
 	JOIN sierra_view.record_metadata AS rm ON rm.record_num = pv.record_num
