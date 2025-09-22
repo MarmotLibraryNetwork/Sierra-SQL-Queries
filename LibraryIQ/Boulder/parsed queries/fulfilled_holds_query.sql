@@ -23,5 +23,6 @@ WHERE
   /*op_code f = filled hold*/
   t.op_code = 'f'
   AND t.transaction_gmt::DATE > CURRENT_DATE - INTERVAL '4 days'
+  AND t.patron_agency_code_num = 3
 
 ORDER BY t.transaction_gmt;

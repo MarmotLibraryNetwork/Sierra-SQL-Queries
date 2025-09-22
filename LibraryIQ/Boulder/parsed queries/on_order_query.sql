@@ -64,5 +64,6 @@ JOIN copies_paid cp
 WHERE 
   /*Filtering to orders that are still on order or that have only been partially received*/
   order_status_code IN ('o','q')
+  AND a.name = 'BPL'
 )inner_query
 WHERE inner_query."copies" > 0;
