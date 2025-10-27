@@ -12,3 +12,4 @@ JOIN (
 ) fine_totals ON pr.id = fine_totals.patron_record_id
 WHERE pr.home_library_code LIKE 'ev%'
     AND pr.mblock_code != '-'
+    And pr.pcode1 in ('c','d')
