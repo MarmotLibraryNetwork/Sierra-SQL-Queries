@@ -30,7 +30,10 @@ TO_CHAR(o.due_gmt,'YYYY-MM-DD HH24:MI:SS') AS "DueDate",
 i.year_to_date_checkout_total AS "YTDCIRC",
 i.last_year_to_date_checkout_total AS "LYRCIRC",
 i.checkout_total AS "TOT_CHKOUT",
-i.renewal_total AS "TOT_RENEW"
+i.renewal_total AS "TOT_RENEW",
+i.last_status_update as "LastStatusUpdate",
+rmi.record_last_updated_gmt as "LastUpdateDate",
+i.inventory_gmt as "LastInventoryDate"
 
 FROM sierra_view.item_record i
 JOIN sierra_view.record_metadata rmi
@@ -64,4 +67,4 @@ LEFT JOIN sierra_view.varfield v
 WHERE SUBSTRING(i.location_code,1,3) NOT IN ('aaa','aja','abj', 'aca', 'acj', 'apa', 'apj', 'ava', 'avj','bba', 'cba', 'eqi', 'eqp', 'erd', 'ill', 'lpj', 'lta','mca', 'mcj', 'mha', 'mhx', 'npj', 'pra','prj','rad','rba','rbc','rcj','rfa', 'rfj', 'rlj', 'rpa', 'rsa','sta', 'vmj', 'vpj')
   and i.agency_code_num = 3
 
-GROUP BY 1,2,3,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24;
+GROUP BY 1,2,3,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27;

@@ -30,7 +30,10 @@ TO_CHAR(o.due_gmt,'YYYY-MM-DD HH24:MI:SS') AS "DueDate",
 i.year_to_date_checkout_total AS "YTDCIRC",
 i.last_year_to_date_checkout_total AS "LYRCIRC",
 i.checkout_total AS "TOT_CHKOUT",
-i.renewal_total AS "TOT_RENEW"
+i.renewal_total AS "TOT_RENEW",
+i.last_status_update as "LastStatusUpdate",
+rmi.record_last_updated_gmt as "LastUpdateDate",
+i.inventory_gmt as "LastInventoryDate"
 
 FROM sierra_view.item_record i
 JOIN sierra_view.record_metadata rmi
