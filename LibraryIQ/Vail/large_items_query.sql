@@ -63,7 +63,6 @@ LEFT JOIN sierra_view.checkout o
 LEFT JOIN sierra_view.varfield v
   ON i.id = v.record_id AND v.varfield_type_code = 'v'
 
-WHERE SUBSTRING(i.location_code,1,3) NOT IN ('aaa','aja','abj', 'aca', 'acj', 'apa', 'apj', 'ava', 'avj','bba', 'cba', 'eqi', 'eqp', 'erd', 'ill', 'lpj', 'lta','mca', 'mcj', 'mha', 'mhx', 'npj', 'pra','prj','rad','rba','rbc','rcj','rfa', 'rfj', 'rlj', 'rpa', 'rsa','sta', 'vmj', 'vpj')
-  and i.agency_code_num = 88
+WHERE i.agency_code_num = 88
  
 GROUP BY 1,2,3,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24;
