@@ -1,6 +1,3 @@
--- Bibliographic Query for LibraryIQ
--- Retrieves bibliographic record data for LibraryIQ reporting
-
 SELECT
 rm.record_type_code||rm.record_num AS "BibNum",
 STRING_AGG(SUBSTRING(num.content FROM '[0-9xX]+'),';' ORDER BY num.occ_num) FILTER(WHERE num.marc_tag = '020') AS isbn,
@@ -22,7 +19,6 @@ LEFT JOIN sierra_view.subfield num
 JOIN sierra_view.material_property_myuser mp
   ON b.material_code = mp.code
 
---Pull full data on Fridays, delta files other days
 WHERE
 CASE
   WHEN EXTRACT(DOW FROM CURRENT_DATE) = 5 THEN rm.record_last_updated_gmt::DATE <= CURRENT_DATE

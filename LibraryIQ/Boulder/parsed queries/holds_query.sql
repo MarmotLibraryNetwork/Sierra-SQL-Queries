@@ -12,5 +12,5 @@ JOIN sierra_view.patron_record pr
   ON h.patron_record_id = pr.id
 
 WHERE h.expires_gmt::DATE > CURRENT_DATE
-AND pr.patron_agency_code_num = 3
+AND pr.patron_agency_code_num IN (3,8)
 GROUP BY 1,2;

@@ -1,13 +1,6 @@
--- Requested Holds Query for LibraryIQ
--- Retrieves data about holds that have been requested
-
 SELECT
 rm.record_type_code||rm.record_num AS "bibliographicRecordID",
 t.id AS "holdID",
-/*
-home_library_code is the default pickup location for the patron placing the hold
-the patron does have the option to change it on the fly when placing the hold
-*/
 SUBSTRING(p.home_library_code,1,3) AS "patronLocation",
 t.transaction_gmt AS "requestedDate",
 CURRENT_DATE AS "reportDate"
@@ -21,13 +14,9 @@ JOIN sierra_view.bib_record_property bp
   ON rm.id = bp.bib_record_id
   AND bp.material_code NOT IN ('b','y','s','h','w','l')
 
-WHERE 
-  /*
-  different types of holds are assigned different op_code values
-  looking for any starting with an n or h will capture all options
-  */
+WHERE
   t.op_code ~ '^(n|h)'
   AND t.transaction_gmt::DATE > CURRENT_DATE - INTERVAL '4 days'
-  AND t.patron_agency_code_num = 3
+  AND t.patron_agency_code_num IN (3,8)
 
 ORDER BY t.transaction_gmt;
