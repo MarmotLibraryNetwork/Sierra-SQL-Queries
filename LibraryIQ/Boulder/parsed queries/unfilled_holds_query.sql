@@ -14,8 +14,6 @@ JOIN sierra_view.record_metadata rm
   ON li.bib_record_id = rm.id
 JOIN sierra_view.bib_record_property bp
   ON rm.id = bp.bib_record_id
-  AND bp.material_code NOT IN ('b','y','s','h','w','l')
-
 WHERE
   (h.expires_gmt > CURRENT_DATE OR h.expires_gmt IS NULL)
   AND h.status = '0'

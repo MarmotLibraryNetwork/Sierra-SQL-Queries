@@ -12,8 +12,6 @@ JOIN sierra_view.statistic_group_myuser sg
   ON t.stat_group_code_num = sg.code
 JOIN sierra_view.bib_record_property bp
   ON rm.id = bp.bib_record_id
-  AND bp.material_code NOT IN ('b','y','s','h','w','l')
-
 WHERE
   t.op_code = 'f'
   AND t.transaction_gmt::DATE > CURRENT_DATE - INTERVAL '4 days'

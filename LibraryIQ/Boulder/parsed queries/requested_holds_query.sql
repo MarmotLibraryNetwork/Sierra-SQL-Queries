@@ -12,8 +12,6 @@ JOIN sierra_view.patron_record p
   ON t.patron_record_id = p.id
 JOIN sierra_view.bib_record_property bp
   ON rm.id = bp.bib_record_id
-  AND bp.material_code NOT IN ('b','y','s','h','w','l')
-
 WHERE
   t.op_code ~ '^(n|h)'
   AND t.transaction_gmt::DATE > CURRENT_DATE - INTERVAL '4 days'

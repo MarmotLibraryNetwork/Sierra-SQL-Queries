@@ -36,7 +36,6 @@ SELECT * FROM (
         ON l.bib_record_id = rmb.id
     JOIN sierra_view.bib_record_property bp
         ON rmb.id = bp.bib_record_id
-        AND bp.material_code NOT IN ('b','y','s','h','w','l')
     JOIN sierra_view.accounting_unit_myuser a
         ON o.accounting_unit_code_num = a.code
     JOIN copies_ordered c
